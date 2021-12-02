@@ -1,32 +1,29 @@
---- Part Two ---
-Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
+--- Day 2: Dive! ---
+Now, you need to figure out how to pilot this thing.
 
-Instead, consider sums of a three-measurement sliding window. Again considering the above example:
+It seems like the submarine can take a series of commands like forward 1, down 2, or up 3:
 
-199  A      
-200  A B    
-208  A B C  
-210    B C D
-200  E   C D
-207  E F   D
-240  E F G  
-269    F G H
-260      G H
-263        H
-Start by comparing the first and second three-measurement windows. The measurements in the first window are marked A (199, 200, 208); their sum is 199 + 200 + 208 = 607. The second window is marked B (200, 208, 210); its sum is 618. The sum of measurements in the second window is larger than the sum of the first, so this first comparison increased.
+forward X increases the horizontal position by X units.
+down X increases the depth by X units.
+up X decreases the depth by X units.
+Note that since you're on a submarine, down and up affect your depth, and so they have the opposite result of what you might expect.
 
-Your goal now is to count the number of times the sum of measurements in this sliding window increases from the previous sum. So, compare A with B, then compare B with C, then C with D, and so on. Stop when there aren't enough measurements left to create a new three-measurement sum.
+The submarine seems to already have a planned course (your puzzle input). You should probably figure out where it's going. For example:
 
-In the above example, the sum of each three-measurement window is as follows:
+forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2
+Your horizontal position and depth both start at 0. The steps above would then modify them as follows:
 
-A: 607 (N/A - no previous sum)
-B: 618 (increased)
-C: 618 (no change)
-D: 617 (decreased)
-E: 647 (increased)
-F: 716 (increased)
-G: 769 (increased)
-H: 792 (increased)
-In this example, there are 5 sums that are larger than the previous sum.
+forward 5 adds 5 to your horizontal position, a total of 5.
+down 5 adds 5 to your depth, resulting in a value of 5.
+forward 8 adds 8 to your horizontal position, a total of 13.
+up 3 decreases your depth by 3, resulting in a value of 2.
+down 8 adds 8 to your depth, resulting in a value of 10.
+forward 2 adds 2 to your horizontal position, a total of 15.
+After following these instructions, you would have a horizontal position of 15 and a depth of 10. (Multiplying these together produces 150.)
 
-Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
+Calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
