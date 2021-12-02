@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1 - Sonar Sweep</title>
+</head>
+<body>
+    <input type="file" name="input" id="input">
+    
+    <br/>
+
+    <p id="answer"></p>
+
+    <script type="text/javascript">
+        document.getElementById("input").addEventListener("change", function() {
+              
+            var fr = new FileReader();
+            fr.onload = function(){
+                // read input txt file and convert it to a number array
+                const coordinatesArray = [];
+                fr.result.split("\n")
+                .forEach((instruction) => {
+                    let coordinateArray = instruction.split(" ");
+                    // convert the position to a number for later calculations (as split converts the input text file into an array of strings)
+                    coordinateArray[1] = Number(coordinateArray[1]);
+                    coordinatesArray.push(coordinateArray);
+                });
+
+                const positionsXandYArray = [[0,0]];
+                coordinatesArray.forEach((nextMove) => {
+                    let horizonalPosition = positionsXandYArray.at(-1)[0];
+                    let depthPosition = positionsXandYArray.at(-1)[1];
+
+                    if (nextMove[0] === "forward"){
+                        horizonalPosition += nextMove[1];
+                    }
+
+                    if (nextMove[0] === "down"){
+                        depthPosition -= nextMove[1];
+                    }
+
+                    if (nextMove[0] === "up"){
+                        depthPosition += nextMove[1];
+                    }
+
+                    positionsXandYArray.push([horizonalPosition,depthPosition]);
+
+                });
+                
+                const total = positionsXandYArray.at(-1)[0] * positionsXandYArray.at(-1)[1];
+                
+                // output answer
+                document.getElementById("answer").textContent = Math.abs(total);
+            }
+              
+            fr.readAsText(this.files[0]);
+        });
+    </script>
+</body>
+</html>
