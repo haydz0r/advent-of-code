@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day 1 - Sonar Sweep</title>
+    <title>Day 2 - Dive!</title>
 </head>
 <body>
     <input type="file" name="input" id="input">
@@ -28,31 +28,35 @@
                     coordinatesArray.push(coordinateArray);
                 });
 
-                const positionsXandYArray = [[0,0]];
+                const positionsXandYArray = [[0,0,0]];
                 coordinatesArray.forEach((nextMove) => {
                     let horizonalPosition = positionsXandYArray.at(-1)[0];
                     let depthPosition = positionsXandYArray.at(-1)[1];
+                    let aim = positionsXandYArray.at(-1)[2];
 
                     if (nextMove[0] === "forward"){
                         horizonalPosition += nextMove[1];
+                        if (aim > 0){
+                            depthPosition += aim * nextMove[1];
+                        }
                     }
 
                     if (nextMove[0] === "down"){
-                        depthPosition -= nextMove[1];
+                        aim += nextMove[1];
                     }
 
                     if (nextMove[0] === "up"){
-                        depthPosition += nextMove[1];
+                        aim -= nextMove[1];
                     }
 
-                    positionsXandYArray.push([horizonalPosition,depthPosition]);
+                    positionsXandYArray.push([horizonalPosition,depthPosition,aim]);
 
                 });
                 
                 const total = positionsXandYArray.at(-1)[0] * positionsXandYArray.at(-1)[1];
                 
                 // output answer
-                document.getElementById("answer").textContent = Math.abs(total);
+                document.getElementById("answer").textContent = total;
             }
               
             fr.readAsText(this.files[0]);
