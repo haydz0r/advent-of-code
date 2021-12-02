@@ -7,9 +7,32 @@
     <title>Day 1 - Sonar Sweep</title>
 </head>
 <body>
+    <input type="file" name="input" id="input">
+    
+    <br/>
+
     <p id="answer"></p>
+
     <script type="text/javascript">
-        
+        document.getElementById("input").addEventListener("change", function() {
+              
+            var fr = new FileReader();
+            fr.onload = function(){
+
+                const inputArray = fr.result.split("\n").map(Number);
+                let depthIncrease = 0; 
+                for (i = 1; i < inputArray.length; i++){
+                    if (inputArray[i] > inputArray[i - 1]){
+                        depthIncrease++;
+                    }
+                }
+
+                // output answer
+                document.getElementById("answer").textContent = depthIncrease;
+            }
+              
+            fr.readAsText(this.files[0]);
+        });
     </script>
 </body>
 </html>
