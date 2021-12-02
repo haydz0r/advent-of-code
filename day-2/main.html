@@ -18,11 +18,20 @@
               
             var fr = new FileReader();
             fr.onload = function(){
-
+                // read input txt file and convert it to a number array
                 const inputArray = fr.result.split("\n").map(Number);
-                let depthIncrease = 0; 
-                for (let i = 1; i < inputArray.length; i++){
-                    if (inputArray[i] > inputArray[i - 1]){
+                let depthIncrease = 0;
+                for (let i = 0; i < inputArray.length; i++){
+                    // if we reach the end of groupings, then exit the loop
+                    if (i === inputArray.length - 2){
+                        break;
+                    }
+
+                    // sum rolling 3 group windows
+                    let currentWindow = inputArray[i] + inputArray[i+1] + inputArray[i+2];
+                    let nextWindow = inputArray[i+1] + inputArray[i+2] + inputArray[i+3];
+
+                    if (nextWindow > currentWindow){
                         depthIncrease++;
                     }
                 }
