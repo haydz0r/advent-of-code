@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2 - Dive!</title>
+</head>
+<body>
+    <input type="file" name="input" id="input">
+    
+    <br/>
+
+    <p id="answer"></p>
+
+    <script type="text/javascript">
+        document.getElementById("input").addEventListener("change", function() {
+              
+            var fr = new FileReader();
+            fr.onload = function(){
+                // read input txt file and convert it to a number array
+
+                const groupedBitsArray = [];
+                let arrayGroupCounter = 0;
+                [...fr.result].map((bit) => {
+                    if (bit !== "\n" && bit !== "\r") {
+                        if (groupedBitsArray[arrayGroupCounter] === undefined){
+                            groupedBitsArray.push([]);
+                        }
+                        groupedBitsArray[arrayGroupCounter].push(bit);
+                        arrayGroupCounter++;
+                    } else {
+                        arrayGroupCounter = 0;
+                    }
+                    
+                });
+
+                const mostCommonValuesString = groupedBitsArray.reduce((finalBitString, currentBitArray) => {
+
+                    let countOfZeroes = 0;
+                    let countOfOnes = 0;
+                    for (let i = 0; i < currentBitArray.length; i++){
+                        if (currentBitArray[i] === "0") {
+                            countOfZeroes++;
+                        } else {
+                            countOfOnes++;
+                        }
+                    }
+                    
+                    let mostCommonValue = countOfZeroes > countOfOnes ? "0" : "1";
+
+                    return finalBitString.concat(mostCommonValue);
+                }, "");
+
+                const gammaRateAsDecimal = parseInt(mostCommonValuesString, 2);
+
+                console.log(mostCommonValuesString);
+                console.log(gammaRateAsDecimal);
+
+                let leastCommonValuesString = "";
+                for (let i = 0; i < mostCommonValuesString.length; i++) {
+                    let inverseBit = mostCommonValuesString[i] === "0" ? "1" : "0";
+                    leastCommonValuesString += inverseBit;
+                }
+
+                const epsilonRateAsDecimal = parseInt(leastCommonValuesString, 2);
+
+                console.log(leastCommonValuesString);
+                console.log(epsilonRateAsDecimal);
+                
+                // output answer
+                document.getElementById("answer").textContent = gammaRateAsDecimal * epsilonRateAsDecimal;
+            }
+              
+            fr.readAsText(this.files[0]);
+        });
+    </script>
+</body>
+</html>
